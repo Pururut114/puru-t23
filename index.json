@@ -143,6 +143,23 @@
             "Assets\\Trigger2to3": ""
           }
         },
+        "2.2.3-fork.12": {
+          "name": "com.pururut.t23",
+          "displayName": "Puru T23",
+          "version": "2.2.3-fork.12",
+          "unity": "2019.4",
+          "description": "Personal fork of Trigger2to3 by Hoke (https://github.com/hoke946/Trigger2to3_VPM). SDK compatibility fixes, localization.",
+          "url": "https://github.com/Pururut114/puru-t23/releases/download/v2.2.3-fork.12/com.pururut.t23-2.2.3-fork.12.zip",
+          "author": {
+            "name": "Pururut",
+            "url": "https://github.com/Pururut114"
+          },
+          "gitDependencies": {},
+          "vpmDependencies": {},
+          "legacyFolders": {
+            "Assets\\Trigger2to3": ""
+          }
+        },
         "2.2.3-fork.11": {
           "name": "com.pururut.t23",
           "displayName": "Puru T23",
