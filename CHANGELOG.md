@@ -1,5 +1,13 @@
 # Changelog — Puru T23
 
+## [2.2.3-fork.8] — 2026-06-04
+
+### Fixed
+- `T23_SetLtcgiState`: wrapped entire class in `#if LTCGI_INCLUDED` — belt-and-suspenders guard against compilation without LTCGI, in addition to existing `defineConstraints`. Fixes CS0246 in projects where `LTCGI_INCLUDED` scripting define is set but LTCGI package is absent (stale define in PlayerSettings after package removal).
+- `T23_SetLtcgiStateEditor`: same — combined guard `#if LTCGI_INCLUDED && UNITY_EDITOR && !COMPILER_UDONSHARP`
+
+---
+
 ## [2.2.3-fork.7] — 2026-06-04
 
 ### Fixed

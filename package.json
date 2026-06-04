@@ -1,7 +1,7 @@
 {
   "name": "com.pururut.t23",
   "displayName": "Puru T23",
-  "version": "2.2.3-fork.7",
+  "version": "2.2.3-fork.8",
   "unity": "2019.4",
   "description": "Personal fork of Trigger2to3 by Hoke (https://github.com/hoke946/Trigger2to3_VPM). SDK compatibility fixes, localization.",
   "url": "https://github.com/Pururut114/puru-t23",

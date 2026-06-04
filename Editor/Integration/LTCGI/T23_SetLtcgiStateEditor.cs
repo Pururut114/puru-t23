@@ -1,4 +1,4 @@
-#if UNITY_EDITOR && !COMPILER_UDONSHARP
+#if LTCGI_INCLUDED && UNITY_EDITOR && !COMPILER_UDONSHARP
 using UnityEditor;
 using UnityEngine;
 

@@ -1,4 +1,4 @@
-
+#if LTCGI_INCLUDED
 using UdonSharp;
 using UnityEngine;
 
@@ -61,3 +61,4 @@ namespace Trigger2to3
         }
     }
 }
+#endif
