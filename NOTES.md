@@ -1,5 +1,15 @@
 # Puru T23 — Оперативные заметки
 
+## Следующие шаги
+
+### Ревизия PSS → Puru T23
+Пройтись по `Puru_Signals_System/` и найти что стоит перетянуть:
+- **UI стилистика** — кастомные цвета/баннеры/стили Inspector из `Editor/PSS_Wizard.cs`, `Editor/PSS_SpawnMenu.cs`
+- **Генерация .asset файлов** — `_gen_meta_assets.py` из PSS, адаптировать под T23 структуру (Runtime/ProgramAsset/)
+- **Валидатор релиза** — `_validate_release.py`, проверяет что все .asset и .meta на месте перед тегом
+- **PSS_AutoSetup** паттерн — auto-создание program assets при domain reload (если нужно)
+- Что ещё найдётся в процессе
+
 ## Репо
 
 - **GitHub:** https://github.com/Pururut114/puru-t23
