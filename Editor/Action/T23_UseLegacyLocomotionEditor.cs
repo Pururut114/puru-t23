@@ -1,0 +1,15 @@
+﻿#if UNITY_EDITOR && !COMPILER_UDONSHARP
+using UnityEditor;
+
+namespace Trigger2to3
+{
+    [CustomEditor(typeof(T23_UseLegacyLocomotion))]
+    internal class T23_UseLegacyLocomotionEditor : T23_ActionEditorBase
+    {
+        protected override void DrawFields()
+        {
+            EditorGUILayout.HelpBox("UseLegacyLocomotion() удалён из VRChat SDK. Этот компонент не выполняет никаких действий.", MessageType.Warning);
+        }
+    }
+}
+#endif
