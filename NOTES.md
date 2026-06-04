@@ -18,16 +18,16 @@
 
 ## Следующие шаги
 
-### Step 1 — SDK/Udon валидация
-Пройтись по актуальной документации VRChat SDK и UdonSharp, проверить каждый Runtime скрипт T23:
-- Все ли API вызовы актуальны (не deprecated, не удалены)
-- Нет ли других случаев как `UseLegacyLocomotion` и `Input.GetAxis` (уже пофикшены)
-- Проверить: `VRCPlayerApi`, networking, station API, physics API
-- Источники: `knowledge/vrchat_sdk/`, `knowledge/udonsharp/`, официальная VRChat docs
+### ~~Step 1 — SDK/Udon валидация~~ ✓ ВЫПОЛНЕНО
+Аудит проведён. Все 80+ скриптов проверены. Найдено и исправлено:
+- `T23_PickupHaptic`: `VRC_Pickup.PlayHaptics()` → `VRCPlayerApi.PlayHapticEventInHand()` (fork.3)
+- Дублирующиеся `* Udon.asset` из upstream + orphan `T23_UIOnValueChangedBool.asset` → удалены (fork.4)
+- `Input.GetKeyDown/GetKeyUp(KeyCode)` — OK, в whitelist
+- `VRCObjectPool.Pool` + foreach — OK
 
 ### Step 2 — Кастомные модули
 Подготовить T23 к добавлению собственных Trigger/Action модулей:
-- Изучить паттерн одного оригинального Trigger + Editor (например `T23_OnInteract` + `T23_OnInteractEditor`)
+- Изучить паттерн одного оригинального Trigger + Editor (например `T23_OnInteract` + editor)
 - Изучить паттерн одного оригинального Action + Editor (например `T23_SetGameObjectActive` + editor)
 - Написать гайд/шаблон для нового модуля: что нужно, что можно не писать, где категорию добавить
 - Первый кастомный модуль как proof-of-concept
