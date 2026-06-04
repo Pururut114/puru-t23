@@ -12,6 +12,8 @@ namespace Trigger2to3
         public bool global = true;
         public bool toggle;
         public bool operation = true;
+        public T23_PropertyBox propertyBox;
+        public bool usePropertyBox;
 
         public GameObject[] screens;
 
@@ -40,6 +42,9 @@ namespace Trigger2to3
         protected override void OnAction()
         {
             if (adapter == null) return;
+
+            if (usePropertyBox && propertyBox)
+                operation = propertyBox.value_b;
 
             if (global)
             {

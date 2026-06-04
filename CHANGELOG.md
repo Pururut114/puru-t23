@@ -1,5 +1,13 @@
 # Changelog — Puru T23
 
+## [2.2.3-fork.12] — 2026-06-04
+
+### Fixed
+- `T23_SetLtcgiState`: added `propertyBox` and `usePropertyBox` fields required by `DrawToggleOperationField()` in the editor — without them `FindProperty("usePropertyBox")` returned null causing NullReferenceException in the Inspector
+- `T23_SetLtcgiState.OnAction()`: reads `operation` from PropertyBox when `usePropertyBox` is set (consistent with other Action modules)
+
+---
+
 ## [2.2.3-fork.11] — 2026-06-04
 
 ### Fixed
