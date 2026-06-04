@@ -1,5 +1,13 @@
 # Changelog — Puru T23
 
+## [2.2.3-fork.4] — 2026-06-04
+
+### Fixed
+- Removed 5 duplicate `* Udon.asset` program assets inherited from upstream (T23_SetParent, T23_InputDrop, T23_InputGrab, T23_InputJump, T23_InputUse) — these caused UdonSharp "referenced by 2 program assets" errors
+- Removed orphaned `T23_UIOnValueChangedBool.asset` (referenced T23_UIOnValueChanged.cs, but T23_UIOnValueChangedBool.cs does not exist)
+
+---
+
 ## [2.2.3-fork.3] — 2026-06-04
 
 ### Fixed
