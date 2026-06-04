@@ -49,8 +49,9 @@
 ## Рабочий процесс — новый релиз
 
 ```powershell
-# 1. Обновить version в package.json ПЕРВЫМ
-# 2. Обновить CHANGELOG.md (создать если нет)
+# 1. Убедиться что ВСЕ изменения закоммичены и запушены в main
+# 2. Обновить version в package.json
+# 3. Обновить CHANGELOG.md
 git add .
 git commit -m "release: Puru T23 vX.X.X-fork.Y"
 git push origin main
@@ -59,6 +60,8 @@ git push origin vX.X.X-fork.Y
 # → release.yml создаёт zip + Release
 # → build-listing.yml обновляет index.json на gh-pages
 ```
+
+> **Важно:** тег должен ставиться ПОСЛЕДНИМ — после того как все коммиты релиза уже в main. Тег фиксирует именно тот коммит, на котором стоит; изменения после тега в релиз не попадают.
 
 Следить за Actions: `gh run watch`
 
