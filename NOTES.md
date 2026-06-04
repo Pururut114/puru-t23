@@ -25,11 +25,15 @@
 - `Input.GetKeyDown/GetKeyUp(KeyCode)` — OK, в whitelist
 - `VRCObjectPool.Pool` + foreach — OK
 
-### Step 2 — Кастомные модули
+### ~~Step 2 — Кастомные модули~~ ✓ ВЫПОЛНЕНО
 Гайд написан: `Docs/ADDING_MODULES.md`
+Первый модуль реализован: `T23_SetLtcgiState` (LTCGI global/per-screen toggle, fork.6/7)
 
-Осталось:
-- Первый кастомный модуль как proof-of-concept
+**Паттерн для интеграций с опциональной зависимостью:**
+- Отдельный asmdef в `Runtime/Script/Integration/<Pkg>/` с `defineConstraints: ["PKG_DEFINE"]`
+- `UdonSharpAssemblyDefinition` `.asset` рядом с asmdef (см. `Trigger2to3.LTCGI.Runtime.asset`)
+- `.asset` для скриптов — **НЕ включать в репо** (UdonSharp создаёт сам при наличии зависимости)
+- `_gen_meta_assets.py` и `_validate_release.py` пропускают эти скрипты автоматически
 
 ### Misc
 - Протестировать VCC install: `vcc://vpm/add-repo?url=https://Pururut114.github.io/puru-t23/index.json`
