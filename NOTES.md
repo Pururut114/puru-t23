@@ -27,17 +27,21 @@
 
 ### ~~Step 2 — Кастомные модули~~ ✓ ВЫПОЛНЕНО
 Гайд написан: `Docs/ADDING_MODULES.md`
-Первый модуль реализован: `T23_SetLtcgiState` (LTCGI global/per-screen toggle, fork.6/7)
+Первый модуль реализован: `T23_SetLtcgiState` (LTCGI global/per-screen toggle, fork.6→fork.9)
 
 **Паттерн для интеграций с опциональной зависимостью:**
 - Отдельный asmdef в `Runtime/Script/Integration/<Pkg>/` с `defineConstraints: ["PKG_DEFINE"]`
 - `UdonSharpAssemblyDefinition` `.asset` рядом с asmdef (см. `Trigger2to3.LTCGI.Runtime.asset`)
 - `.asset` для скриптов — **НЕ включать в репо** (UdonSharp создаёт сам при наличии зависимости)
 - `_gen_meta_assets.py` и `_validate_release.py` пропускают эти скрипты автоматически
+- Класс в `.cs` оборачивать в `#if PKG_DEFINE ... #endif` (belt-and-suspenders поверх `defineConstraints`)
+- Editor `.cs` — `#if PKG_DEFINE && UNITY_EDITOR && !COMPILER_UDONSHARP`
+
+**LTCGI-специфично:** assembly reference = `"LTCGI_AssemblyUdon"` (не `"LTCGI"`!)
 
 ### Misc
 - Протестировать VCC install: `vcc://vpm/add-repo?url=https://Pururut114.github.io/puru-t23/index.json`
-- Импорт в реальный Unity проект, проверить компиляцию и работу в сцене
+- ~~Импорт в реальный Unity проект, проверить компиляцию~~ (тестируется fork.9)
 
 ## Репо
 

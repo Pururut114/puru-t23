@@ -1,5 +1,12 @@
 # Changelog — Puru T23
 
+## [2.2.3-fork.10] — 2026-06-04
+
+### Fixed
+- `Trigger2to3.LTCGI.Runtime.asmdef`: corrected assembly reference to `"LTCGI_Assembly"` (the actual `.asmdef` name field). Previous attempts used `"LTCGI"` and `"LTCGI_AssemblyUdon"` — the latter is the name of LTCGI's `UdonSharpAssemblyDefinition` asset, not the assembly itself.
+
+---
+
 ## [2.2.3-fork.9] — 2026-06-04
 
 ### Fixed
