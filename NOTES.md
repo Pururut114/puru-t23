@@ -43,6 +43,17 @@
 - `"LTCGI_AssemblyUdon"` — название UdonSharpAssemblyDefinition `.asset`, НЕ имя сборки
 - Пакет: `at.pimaker.ltcgi`, define: `LTCGI_INCLUDED`
 
+### Step 3 — Тест новых модулей (fork.13)
+
+- [ ] **T23_SetPickupable** — повесить на объект с VRC_Pickup, проверить:
+  - `pickupable=false` + `dropIfDisabling=true` → вещь вылетает из рук при срабатывании
+  - `pickupable=false` + `dropIfDisabling=false` → удерживающий не теряет, подобрать нельзя
+  - `pickupable=true` → вещь снова подбирается
+- [ ] **T23_SetAvatarScaling** — проверить оба режима:
+  - Конкретный рост: `setSpecificHeight=true`, `eyeHeight=1.0` → игрок уменьшается, manual scaling выключен
+  - Диапазон: `setSpecificHeight=false`, `allowManualScaling=true`, min=0.5/max=3.0 → игрок может менять рост в пределах
+  - Проверить что после `setSpecificHeight=true` нельзя вручную менять рост (баг VRC с порядком вызовов)
+
 ### Misc
 - Протестировать VCC install: `vcc://vpm/add-repo?url=https://Pururut114.github.io/puru-t23/index.json`
 - ~~Импорт в реальный Unity проект, проверить компиляцию~~ ✓ fork.12 — LTCGI интеграция работает
