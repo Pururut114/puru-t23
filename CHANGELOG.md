@@ -1,5 +1,15 @@
 # Changelog — Puru T23
 
+## [2.2.3-fork.3] — 2026-06-04
+
+### Fixed
+- `T23_PickupHaptic`: replaced removed `VRC_Pickup.PlayHaptics()` with `VRCPlayerApi.PlayHapticEventInHand(hand, duration, amplitude, frequency)`
+
+### Changed
+- `T23_PickupHaptic`: added `duration` (0.3), `amplitude` (0.8), `frequency` (0.5) public fields (range 0–1) for haptic parameters
+
+---
+
 ## [2.2.3-fork.2] — 2026-06-04
 
 ### Changed

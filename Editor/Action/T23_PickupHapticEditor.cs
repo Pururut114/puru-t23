@@ -9,6 +9,9 @@ namespace Trigger2to3
         protected override void DrawFields()
         {
             DrawRecieversList();
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("duration"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("amplitude"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("frequency"));
         }
     }
 }
