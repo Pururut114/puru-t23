@@ -216,8 +216,8 @@ namespace Trigger2to3
             }
 
             var moduleList = new Dictionary<string, Type>();
-            var modules = Assembly.GetAssembly(baseType).GetTypes()
-                .Where(t => t.IsSubclassOf(baseType)).ToArray();
+            var modules = TypeCache.GetTypesDerivedFrom(baseType)
+                .Where(t => !t.IsAbstract).ToArray();
 
             foreach (var module in modules)
             {

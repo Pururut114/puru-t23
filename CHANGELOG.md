@@ -1,5 +1,13 @@
 # Changelog — Puru T23
 
+## [2.2.3-fork.11] — 2026-06-04
+
+### Fixed
+- `T23_SetLtcgiState`: added `UdonSharpProgramAsset` `.asset` stub to repo — VPM packages are writable but UdonSharp does not auto-create new program assets; stub is required for the component to function (UdonSharp populates it on first compile)
+- `T23_EditorUtility.GetModuleClasses`: changed assembly scan from `Assembly.GetAssembly(baseType).GetTypes()` to `TypeCache.GetTypesDerivedFrom(baseType)` — now scans ALL loaded assemblies, so integration actions from separate assemblies (LTCGI etc.) appear in the add menu
+
+---
+
 ## [2.2.3-fork.10] — 2026-06-04
 
 ### Fixed

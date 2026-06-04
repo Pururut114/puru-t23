@@ -37,7 +37,7 @@
 - Класс в `.cs` оборачивать в `#if PKG_DEFINE ... #endif` (belt-and-suspenders поверх `defineConstraints`)
 - Editor `.cs` — `#if PKG_DEFINE && UNITY_EDITOR && !COMPILER_UDONSHARP`
 
-**LTCGI-специфично:** assembly reference = `"LTCGI_AssemblyUdon"` (не `"LTCGI"`!)
+**LTCGI-специфично:** assembly reference = `"LTCGI_Assembly"` — имя из поля `name` в `LTCGI_Assembly.asmdef`. `"LTCGI_AssemblyUdon"` — это название UdonSharpAssemblyDefinition `.asset` файла, не сборки.
 
 ### Misc
 - Протестировать VCC install: `vcc://vpm/add-repo?url=https://Pururut114.github.io/puru-t23/index.json`
