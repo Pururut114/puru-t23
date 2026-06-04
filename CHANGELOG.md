@@ -1,5 +1,15 @@
 # Changelog — Puru T23
 
+## [2.2.3-fork.5] — 2026-06-04
+
+### Fixed
+- Removed `T23_Master.asset` — editor-only `MonoBehaviour` wrapped in `#if UNITY_EDITOR`, not an `UdonSharpBehaviour`; caused "Script with U# program asset must have UdonSharpBehaviour definition" error
+
+### Changed
+- `_gen_meta_assets.py`: skip classes whose file starts with `#if UNITY_EDITOR` to prevent regenerating the bogus asset
+
+---
+
 ## [2.2.3-fork.4] — 2026-06-04
 
 ### Fixed

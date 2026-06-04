@@ -96,6 +96,8 @@ def is_concrete_t23(path):
         text = open(path, "r", encoding="utf-8").read()
     except Exception:
         return False
+    if text.lstrip().startswith("#if UNITY_EDITOR"):
+        return False
     return (re.search(r"public\s+class\s+T23_\w+\s*:", text)
             and not re.search(r"\babstract\s+class\b", text))
 
