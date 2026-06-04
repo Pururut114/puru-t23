@@ -1,5 +1,13 @@
 # Changelog — Puru T23
 
+## [2.2.3-fork.13] — 2026-06-04
+
+### Added
+- `T23_SetPickupable` Action — включить/выключить `VRC_Pickup.pickupable` на массиве объектов; опция `dropIfDisabling` (выбросить из рук при отключении). Портировано из `PSS_SetPickupable`.
+- `T23_SetAvatarScaling` Action — управление масштабом аватара игрока. Два режима: конкретный рост (`SetAvatarEyeHeightByMeters` + принудительное `SetManualAvatarScalingAllowed(false)`) и player-controlled диапазон (`SetAvatarEyeHeightMinimumByMeters` / `Maximum` + `allowManualScaling`). Портировано из `PSS_SetAvatarScale`. Расширяет `T23_SetAvatarEyeHeight`.
+
+---
+
 ## [2.2.3-fork.12] — 2026-06-04
 
 ### Fixed
