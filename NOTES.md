@@ -1,14 +1,25 @@
 # Puru T23 — Оперативные заметки
 
+## Инструменты
+
+| Скрипт | Назначение |
+|--------|-----------|
+| `_gen_meta_assets.py` | Генерирует .meta для всех файлов + .asset для новых UdonSharpBehaviour. Запускать после добавления нового скрипта. |
+| `_validate_release.py` | Pre-tag валидатор: version vs CHANGELOG, тег не существует, все .asset и .meta на месте. |
+
+### Добавить новый Trigger/Action
+1. Написать `.cs` в `Runtime/Script/<тип>/T23_MyNew.cs`
+2. Написать Editor Inspector в `Editor/<тип>/T23_MyNewEditor.cs`
+3. `python _gen_meta_assets.py` → создаст `Runtime/ProgramAsset/<тип>/T23_MyNew.asset` + все .meta
+4. Открыть Unity → дождаться компиляции → убедиться что всё работает
+5. Бамп версии в `package.json`, запись в `CHANGELOG.md`
+6. `python _validate_release.py` → должно быть OK
+7. Релиз (см. ниже)
+
 ## Следующие шаги
 
-### Ревизия PSS → Puru T23
-Пройтись по `Puru_Signals_System/` и найти что стоит перетянуть:
-- **UI стилистика** — кастомные цвета/баннеры/стили Inspector из `Editor/PSS_Wizard.cs`, `Editor/PSS_SpawnMenu.cs`
-- **Генерация .asset файлов** — `_gen_meta_assets.py` из PSS, адаптировать под T23 структуру (Runtime/ProgramAsset/)
-- **Валидатор релиза** — `_validate_release.py`, проверяет что все .asset и .meta на месте перед тегом
-- **PSS_AutoSetup** паттерн — auto-создание program assets при domain reload (если нужно)
-- Что ещё найдётся в процессе
+- Протестировать VCC install: `vcc://vpm/add-repo?url=https://Pururut114.github.io/puru-t23/index.json`
+- Импорт в реальный Unity проект, проверить компиляцию и работу в сцене
 
 ## Репо
 
