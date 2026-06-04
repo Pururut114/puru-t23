@@ -27,21 +27,25 @@
 
 ### ~~Step 2 — Кастомные модули~~ ✓ ВЫПОЛНЕНО
 Гайд написан: `Docs/ADDING_MODULES.md`
-Первый модуль реализован: `T23_SetLtcgiState` (LTCGI global/per-screen toggle, fork.6→fork.9)
+Первый модуль реализован: `T23_SetLtcgiState` (LTCGI global/per-screen toggle, fork.6→fork.12)
 
-**Паттерн для интеграций с опциональной зависимостью:**
-- Отдельный asmdef в `Runtime/Script/Integration/<Pkg>/` с `defineConstraints: ["PKG_DEFINE"]`
-- `UdonSharpAssemblyDefinition` `.asset` рядом с asmdef (см. `Trigger2to3.LTCGI.Runtime.asset`)
-- `.asset` для скриптов — **НЕ включать в репо** (UdonSharp создаёт сам при наличии зависимости)
-- `_gen_meta_assets.py` и `_validate_release.py` пропускают эти скрипты автоматически
-- Класс в `.cs` оборачивать в `#if PKG_DEFINE ... #endif` (belt-and-suspenders поверх `defineConstraints`)
-- Editor `.cs` — `#if PKG_DEFINE && UNITY_EDITOR && !COMPILER_UDONSHARP`
+**Паттерн для интеграций с опциональной зависимостью (финальный):**
+1. Отдельный asmdef в `Runtime/Script/Integration/<Pkg>/` с `defineConstraints: ["PKG_DEFINE"]` и правильным assembly reference
+2. `UdonSharpAssemblyDefinition` `.asset` рядом с asmdef (создаётся вручную, формат из `Trigger2to3.asset`)
+3. Класс в `.cs` оборачивать в `#if PKG_DEFINE ... #endif`; Editor `.cs` — `#if PKG_DEFINE && UNITY_EDITOR && !COMPILER_UDONSHARP`
+4. **Program asset stub ВКЛЮЧАТЬ в репо** (`Runtime/ProgramAsset/Integration/<Pkg>/`) — VPM пакеты writable, но UdonSharp новые `.asset` сам не создаёт. Формат: minimal YAML с `sourceCsScript guid` из `.cs.meta`
+5. `_gen_meta_assets.py` и `_validate_release.py` пропускают `defineConstraints`-скрипты автоматически (для stub это OK — файл уже есть)
+6. `GetModuleClasses` использует `TypeCache.GetTypesDerivedFrom` — сканирует все сборки, находит типы из отдельных assembly
+7. **Action с toggle/operation UI обязан объявить `propertyBox` (T23_PropertyBox) и `usePropertyBox` (bool)** — `DrawToggleOperationField()` / `DrawBoolOperationField()` вызывают `FindProperty` по этим именам; если полей нет → NullReferenceException в инспекторе. В `OnAction()`: `if (usePropertyBox && propertyBox) operation = propertyBox.value_b;`
 
-**LTCGI-специфично:** assembly reference = `"LTCGI_Assembly"` — имя из поля `name` в `LTCGI_Assembly.asmdef`. `"LTCGI_AssemblyUdon"` — это название UdonSharpAssemblyDefinition `.asset` файла, не сборки.
+**LTCGI-специфично:**
+- Assembly reference = `"LTCGI_Assembly"` (имя из поля `name` в `LTCGI_Assembly.asmdef`)
+- `"LTCGI_AssemblyUdon"` — название UdonSharpAssemblyDefinition `.asset`, НЕ имя сборки
+- Пакет: `at.pimaker.ltcgi`, define: `LTCGI_INCLUDED`
 
 ### Misc
 - Протестировать VCC install: `vcc://vpm/add-repo?url=https://Pururut114.github.io/puru-t23/index.json`
-- ~~Импорт в реальный Unity проект, проверить компиляцию~~ (тестируется fork.9)
+- ~~Импорт в реальный Unity проект, проверить компиляцию~~ ✓ fork.12 — LTCGI интеграция работает
 
 ## Репо
 
