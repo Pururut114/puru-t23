@@ -152,6 +152,23 @@ for root, dirs, files in os.walk(BASE):
         print(f"  file.meta    {rel_file}.meta")
         created += 1
 
+def has_define_constraints(rel_cs):
+    """True if the script lives in an assembly with non-empty defineConstraints."""
+    folder = os.path.dirname(os.path.join(BASE, rel_cs.replace("/", os.sep)))
+    while folder and folder != BASE:
+        for fname in os.listdir(folder):
+            if fname.endswith(".asmdef"):
+                try:
+                    import json
+                    data = json.load(open(os.path.join(folder, fname), "r", encoding="utf-8"))
+                    if data.get("defineConstraints"):
+                        return True
+                except Exception:
+                    pass
+        folder = os.path.dirname(folder)
+    return False
+
+
 # ── Pass 2: .asset + .meta for each concrete T23 behaviour ───────────────────
 
 for rel_cs, cs_guid in sorted(cs_guids.items()):
@@ -160,6 +177,9 @@ for rel_cs, cs_guid in sorted(cs_guids.items()):
         continue
     fpath = os.path.join(BASE, rel_cs.replace("/", os.sep))
     if not is_concrete_t23(fpath):
+        continue
+    # Skip scripts in optional integration assemblies (defineConstraints)
+    if has_define_constraints(rel_cs):
         continue
 
     # Mirror path: Runtime/Script/<sub>/T23_Foo.cs → Runtime/ProgramAsset/<sub>/T23_Foo.asset

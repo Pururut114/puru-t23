@@ -1,5 +1,14 @@
 # Changelog — Puru T23
 
+## [2.2.3-fork.7] — 2026-06-04
+
+### Fixed
+- `T23_SetLtcgiState`: removed pre-generated `.asset` from repo — UdonSharp compiles scripts via its own Roslyn pipeline regardless of asmdef `defineConstraints`, causing CS0246 when LTCGI is not installed. Without `.asset` UdonSharp won't attempt compilation; with LTCGI present it auto-generates the asset on first compile.
+- `_gen_meta_assets.py`: skip `.asset` generation for scripts in assemblies with `defineConstraints` (optional integrations)
+- `_validate_release.py`: same — don't require `.asset` for conditionally compiled scripts
+
+---
+
 ## [2.2.3-fork.6] — 2026-06-04
 
 ### Added
