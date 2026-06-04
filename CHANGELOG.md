@@ -1,5 +1,12 @@
 # Changelog — Puru T23
 
+## [2.2.3-fork.9] — 2026-06-04
+
+### Fixed
+- `Trigger2to3.LTCGI.Runtime.asmdef`: corrected assembly reference from `"LTCGI"` to `"LTCGI_AssemblyUdon"` — the actual name of LTCGI's UdonSharp assembly. Previous name caused CS0246 (`LTCGI_UdonAdapter` not found) because the assembly reference silently failed to resolve.
+
+---
+
 ## [2.2.3-fork.8] — 2026-06-04
 
 ### Fixed

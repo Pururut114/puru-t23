@@ -6,7 +6,7 @@
         "VRC.SDKBase",
         "VRC.Udon",
         "UdonSharp.Runtime",
-        "LTCGI"
+        "LTCGI_AssemblyUdon"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
