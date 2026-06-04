@@ -93,7 +93,7 @@ def program_asset(name, cs_guid):
 
 def is_concrete_t23(path):
     try:
-        text = open(path, "r", encoding="utf-8").read()
+        text = open(path, "r", encoding="utf-8-sig").read()
     except Exception:
         return False
     if text.lstrip().startswith("#if UNITY_EDITOR"):

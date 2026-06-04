@@ -1,5 +1,18 @@
 # Changelog — Puru T23
 
+## [2.2.3-fork.6] — 2026-06-04
+
+### Added
+- `T23_SetLtcgiState` Action — enable/disable/toggle LTCGI system (Global or Per-Screen mode); optional dependency, compiles only when `LTCGI_INCLUDED` is defined
+- `Editor/Integration/LTCGI/T23_SetLtcgiStateEditor` — Inspector with Mode, Operation and Screens fields
+- `Runtime/Script/Integration/LTCGI/Trigger2to3.LTCGI.Runtime.asmdef` — conditional assembly with `defineConstraints: LTCGI_INCLUDED`
+- `Editor/Integration/LTCGI/Trigger2to3.LTCGI.Editor.asmdef` — conditional editor assembly
+
+### Fixed
+- `_gen_meta_assets.py`: use `utf-8-sig` encoding to strip BOM — previously `#if UNITY_EDITOR` check failed for BOM-prefixed files, causing `T23_Master.asset` to regenerate despite the `fork.5` fix
+
+---
+
 ## [2.2.3-fork.5] — 2026-06-04
 
 ### Fixed

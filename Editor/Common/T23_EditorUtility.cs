@@ -203,6 +203,7 @@ namespace Trigger2to3
             { "T23_ActiveConditionalTrigger",   "Logic" },
             { "T23_ActiveCustomTrigger",        "Logic" },
             { "T23_UseLegacyLocomotion",        "Deprecated" },
+            { "T23_SetLtcgiState",             "Integration" },
         };
 
         public static Dictionary<string, Type> GetModuleClasses(Type baseType, bool initialSplit)

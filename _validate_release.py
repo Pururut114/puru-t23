@@ -48,8 +48,10 @@ ASSET_ROOT  = "Runtime/ProgramAsset"
 
 def _is_concrete_t23(path):
     try:
-        text = path.read_text("utf-8")
+        text = path.read_text("utf-8-sig")
     except Exception:
+        return False
+    if text.lstrip().startswith("#if UNITY_EDITOR"):
         return False
     return (re.search(r"public\s+class\s+T23_\w+\s*:", text)
             and not re.search(r"\babstract\s+class\b", text))

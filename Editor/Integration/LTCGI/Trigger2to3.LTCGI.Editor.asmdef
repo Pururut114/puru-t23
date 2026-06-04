@@ -1,0 +1,24 @@
+{
+    "name": "Trigger2to3.LTCGI.Editor",
+    "references": [
+        "Trigger2to3.Runtime",
+        "Trigger2to3.Editor",
+        "Trigger2to3.LTCGI.Runtime",
+        "VRC.SDK3",
+        "VRC.SDK3.Editor",
+        "VRC.SDKBase",
+        "VRC.SDKBase.Editor",
+        "VRC.Udon",
+        "UdonSharp.Runtime",
+        "UdonSharp.Editor"
+    ],
+    "includePlatforms": ["Editor"],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": ["LTCGI_INCLUDED"],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
