@@ -1,0 +1,151 @@
+#!/usr/bin/env python3
+"""Puru T23 release validator. Run from the repo root before pushing a version tag.
+Usage: python _validate_release.py
+"""
+
+import json, re, subprocess, sys
+from pathlib import Path
+
+ROOT = Path(__file__).parent
+ERRORS, OK = [], []
+err = lambda m: ERRORS.append(f"  [FAIL] {m}")
+ok  = lambda m: OK.append(f"  [ OK ] {m}")
+
+
+# 1. Version consistency: package.json == CHANGELOG top entry
+def check_versions():
+    version = json.loads((ROOT / "package.json").read_text("utf-8"))["version"]
+    changelog_path = ROOT / "CHANGELOG.md"
+    if not changelog_path.exists():
+        err("CHANGELOG.md not found — create it"); return version
+    changelog = changelog_path.read_text("utf-8")
+    m = re.search(r"## \[([^\]]+)\]", changelog)
+    if not m:
+        err("CHANGELOG.md has no version entries"); return version
+    cl = m.group(1)
+    if version != cl:
+        err(f"Version mismatch — package.json: {version}, CHANGELOG top: {cl}")
+    else:
+        ok(f"Version {version} matches CHANGELOG")
+    return version
+
+
+# 2. Tag for this version must not exist yet
+def check_no_existing_tag(version):
+    if not version:
+        return
+    result = subprocess.run(["git", "tag", "-l", f"v{version}"], cwd=ROOT,
+                            capture_output=True, text=True)
+    if result.stdout.strip():
+        err(f"Tag v{version} already exists -- bump version first")
+    else:
+        ok(f"Tag v{version} is free")
+
+
+# 3. Every concrete UdonSharpBehaviour in Runtime/Script/ → Runtime/ProgramAsset/ .asset
+SCRIPT_ROOT = "Runtime/Script"
+ASSET_ROOT  = "Runtime/ProgramAsset"
+
+def _is_concrete_t23(path):
+    try:
+        text = path.read_text("utf-8")
+    except Exception:
+        return False
+    return (re.search(r"public\s+class\s+T23_\w+\s*:", text)
+            and not re.search(r"\babstract\s+class\b", text))
+
+def check_program_assets():
+    script_dir = ROOT / SCRIPT_ROOT
+    asset_dir  = ROOT / ASSET_ROOT
+    if not script_dir.exists():
+        err(f"{SCRIPT_ROOT}/ not found"); return
+    missing = []
+    for cs in script_dir.rglob("*.cs"):
+        if not _is_concrete_t23(cs):
+            continue
+        rel = cs.relative_to(script_dir)
+        asset_path = asset_dir / rel.with_suffix(".asset")
+        if not asset_path.exists():
+            missing.append(cs.stem)
+    if missing:
+        for name in missing:
+            err(f"Missing program asset: {name}.asset  (run _gen_meta_assets.py)")
+    else:
+        ok("All concrete UdonSharpBehaviours have program assets")
+
+
+# 4. Non-editor .asmdef → UdonSharpAssemblyDefinition .asset
+# The .asset name is user-chosen, so detect by script GUID content match.
+UASM_DEF_GUID = "5136146375e9a0a498a72a0091b40cc1"
+
+def check_uasm_defs():
+    missing = []
+    for asmdef in ROOT.rglob("*.asmdef"):
+        rel = asmdef.relative_to(ROOT).as_posix()
+        if "Editor/" in rel:
+            continue
+        found = any(
+            UASM_DEF_GUID in a.read_text("utf-8", errors="ignore")
+            for a in asmdef.parent.glob("*.asset")
+        )
+        if not found:
+            missing.append(asmdef.name)
+    if missing:
+        for name in missing:
+            err(f"Missing UdonSharpAssemblyDefinition for {name}  "
+                f"(select .asmdef -> Create -> U# Assembly Definition)")
+    else:
+        ok("All non-editor assemblies have UdonSharpAssemblyDefinition")
+
+
+# 5. Every git-tracked Unity asset file has a .meta counterpart
+SKIP_META_PREFIXES = (".git/", ".github/", "Sample/")
+SKIP_META_NAMES    = {".gitignore", "source.json", "_gen_meta_assets.py"}
+
+def check_meta():
+    result = subprocess.run(["git", "ls-files"], cwd=ROOT,
+                            capture_output=True, text=True)
+    deleted = subprocess.run(["git", "ls-files", "--deleted"], cwd=ROOT,
+                             capture_output=True, text=True)
+    deleted_set = set(deleted.stdout.strip().splitlines())
+    candidates = [
+        f for f in result.stdout.strip().splitlines()
+        if f
+        and f not in deleted_set
+        and not f.endswith(".meta")
+        and not any(f.startswith(p) for p in SKIP_META_PREFIXES)
+        and f not in SKIP_META_NAMES
+    ]
+    missing = [f for f in candidates if not (ROOT / f"{f}.meta").exists()]
+    if missing:
+        for f in missing:
+            err(f"Missing .meta: {f}  (run _gen_meta_assets.py)")
+    else:
+        ok(f"All {len(candidates)} Unity-tracked files have .meta")
+
+
+# ── Run ───────────────────────────────────────────────────────────────────────
+
+print("== Puru T23 Release Validator ==============================\n")
+
+version = check_versions()
+check_no_existing_tag(version)
+check_program_assets()
+check_uasm_defs()
+check_meta()
+
+print("\n".join(OK))
+
+if ERRORS:
+    print()
+    print("\n".join(ERRORS))
+    print(f"\nFAIL -- {len(ERRORS)} error(s). Fix before pushing.")
+    sys.exit(1)
+else:
+    print(f"\nOK -- all checks passed. Ready to release.")
+    print(f"\nNext steps:")
+    print(f"  git add .")
+    print(f"  git commit -m \"release: Puru T23 v{version}\"")
+    print(f"  git push origin main")
+    print(f"  git tag v{version}")
+    print(f"  git push origin v{version}")
