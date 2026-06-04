@@ -26,10 +26,9 @@
 - `VRCObjectPool.Pool` + foreach — OK
 
 ### Step 2 — Кастомные модули
-Подготовить T23 к добавлению собственных Trigger/Action модулей:
-- Изучить паттерн одного оригинального Trigger + Editor (например `T23_OnInteract` + editor)
-- Изучить паттерн одного оригинального Action + Editor (например `T23_SetGameObjectActive` + editor)
-- Написать гайд/шаблон для нового модуля: что нужно, что можно не писать, где категорию добавить
+Гайд написан: `Docs/ADDING_MODULES.md`
+
+Осталось:
 - Первый кастомный модуль как proof-of-concept
 
 ### Misc
