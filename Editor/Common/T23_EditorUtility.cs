@@ -94,15 +94,147 @@ namespace Trigger2to3
             EditorGUILayout.EndHorizontal();
         }
 
+        private static readonly Dictionary<string, string> s_TriggerCategories = new Dictionary<string, string>
+        {
+            { "T23_OnSpawn",                    "Lifecycle" },
+            { "T23_OnDestroy",                  "Lifecycle" },
+            { "T23_OnEnable",                   "Lifecycle" },
+            { "T23_OnDisable",                  "Lifecycle" },
+            { "T23_OnInteract",                 "Interaction" },
+            { "T23_OnPickup",                   "Interaction" },
+            { "T23_OnDrop",                     "Interaction" },
+            { "T23_OnPickupUseDown",            "Interaction" },
+            { "T23_OnPickupUseUp",              "Interaction" },
+            { "T23_OnEnterTrigger",             "Interaction" },
+            { "T23_OnExitTrigger",              "Interaction" },
+            { "T23_OnEnterCollider",            "Interaction" },
+            { "T23_OnExitCollider",             "Interaction" },
+            { "T23_InputJump",                  "Input" },
+            { "T23_InputUse",                   "Input" },
+            { "T23_InputGrab",                  "Input" },
+            { "T23_InputDrop",                  "Input" },
+            { "T23_OnKeyDown",                  "Input" },
+            { "T23_OnKeyUp",                    "Input" },
+            { "T23_OnPlayerJoined",             "Player" },
+            { "T23_OnPlayerLeft",               "Player" },
+            { "T23_OnPlayerRespawn",            "Player" },
+            { "T23_OnAvatarChanged",            "Player" },
+            { "T23_OnAvatarEyeHeightChanged",   "Player" },
+            { "T23_OnOwnershipTransfer",        "Player" },
+            { "T23_OnNetworkReady",             "Network" },
+            { "T23_OnStationEntered",           "Station" },
+            { "T23_OnStationExited",            "Station" },
+            { "T23_OnTimer",                    "Timer" },
+            { "T23_OnVideoEnd",                 "Video" },
+            { "T23_OnVideoPause",               "Video" },
+            { "T23_OnVideoPlay",                "Video" },
+            { "T23_OnVideoStart",               "Video" },
+            { "T23_UIOnClickButton",            "UI" },
+            { "T23_UIOnEndEdit",                "UI" },
+            { "T23_UIOnValueChanged",           "UI" },
+            { "T23_OnParticleCollision",        "Physics" },
+            { "T23_MidiNoteOn",                 "MIDI" },
+            { "T23_MidiNoteOff",                "MIDI" },
+            { "T23_MidiControlChange",          "MIDI" },
+            { "T23_CustomTrigger",              "Logic" },
+            { "T23_ConditionalTrigger",         "Logic" },
+        };
+
+        private static readonly Dictionary<string, string> s_ActionCategories = new Dictionary<string, string>
+        {
+            { "T23_SetGameObjectActive",        "GameObject" },
+            { "T23_SetChildrenActive",          "GameObject" },
+            { "T23_SetNextChildActive",         "GameObject" },
+            { "T23_SetRandomChildActive",       "GameObject" },
+            { "T23_DestroyObject",              "GameObject" },
+            { "T23_SpawnObject",                "GameObject" },
+            { "T23_SetParent",                  "GameObject" },
+            { "T23_SetLayer",                   "GameObject" },
+            { "T23_SpawnObjectPool",            "Object Pool" },
+            { "T23_ReturnObjectPool",           "Object Pool" },
+            { "T23_ReturnObjectPoolAll",        "Object Pool" },
+            { "T23_ShuffleObjectPool",          "Object Pool" },
+            { "T23_SetRendererActive",          "Renderer" },
+            { "T23_SetMaterial",                "Renderer" },
+            { "T23_SetColliderActive",          "Renderer" },
+            { "T23_SetAnimatorActive",          "Renderer" },
+            { "T23_SetParticlePlaying",         "Renderer" },
+            { "T23_AnimationBool",              "Animation" },
+            { "T23_AnimationFloat",             "Animation" },
+            { "T23_AnimationInt",               "Animation" },
+            { "T23_AnimationIntAdd",            "Animation" },
+            { "T23_AnimationIntSubtract",       "Animation" },
+            { "T23_AnimationIntMultiply",       "Animation" },
+            { "T23_AnimationIntDivide",         "Animation" },
+            { "T23_AnimationTrigger",           "Animation" },
+            { "T23_SetVelocity",                "Physics" },
+            { "T23_AddVelocity",                "Physics" },
+            { "T23_SetAngularVelocity",         "Physics" },
+            { "T23_AddAngularVelocity",         "Physics" },
+            { "T23_AddForce",                   "Physics" },
+            { "T23_SetIsKinematic",             "Physics" },
+            { "T23_SetGravityStrength",         "Physics" },
+            { "T23_SetUseGravity",              "Physics" },
+            { "T23_AudioPlay",                  "Audio" },
+            { "T23_AudioPause",                 "Audio" },
+            { "T23_AudioTrigger",               "Audio" },
+            { "T23_UseAudioBank",               "Audio" },
+            { "T23_SetAudioSourceActive",       "Audio" },
+            { "T23_SetPlayerSpeed",             "Player" },
+            { "T23_SetPlayerVelocity",          "Player" },
+            { "T23_AddPlayerVelocity",          "Player" },
+            { "T23_SetAvatarEyeHeight",         "Player" },
+            { "T23_SetAvatarUse",               "Player" },
+            { "T23_SetAvatarAudioParameters",   "Player" },
+            { "T23_SetVoiceParameters",         "Player" },
+            { "T23_SetJumpImpulse",             "Player" },
+            { "T23_TeleportPlayer",             "Teleport" },
+            { "T23_TeleportObject",             "Teleport" },
+            { "T23_PickupDrop",                 "Pickup" },
+            { "T23_PickupHaptic",               "Pickup" },
+            { "T23_SetUIBool",                  "UI" },
+            { "T23_SetUIFloat",                 "UI" },
+            { "T23_SetUIInt",                   "UI" },
+            { "T23_SetUIText",                  "UI" },
+            { "T23_TakeOwnership",              "System" },
+            { "T23_UseAttachedStation",         "System" },
+            { "T23_SetPropertyBox",             "System" },
+            { "T23_CallUdonMethod",             "System" },
+            { "T23_ActiveConditionalTrigger",   "Logic" },
+            { "T23_ActiveCustomTrigger",        "Logic" },
+            { "T23_UseLegacyLocomotion",        "Deprecated" },
+        };
+
         public static Dictionary<string, Type> GetModuleClasses(Type baseType, bool initialSplit)
         {
-            Dictionary<string, Type> moduleList = new Dictionary<string, Type>();
-            var modules = Assembly.GetAssembly(baseType).GetTypes().Where(t => { return t.IsSubclassOf(baseType); }).ToArray();
+            Dictionary<string, string> categoryMap = null;
+            if (initialSplit)
+            {
+                if (baseType == typeof(T23_TriggerBase))     categoryMap = s_TriggerCategories;
+                else if (baseType == typeof(T23_ActionBase)) categoryMap = s_ActionCategories;
+            }
+
+            var moduleList = new Dictionary<string, Type>();
+            var modules = Assembly.GetAssembly(baseType).GetTypes()
+                .Where(t => t.IsSubclassOf(baseType)).ToArray();
+
             foreach (var module in modules)
             {
-                string split = initialSplit ? (module.Name.Substring(4, 1) + "/") : "";
-                string key = split + module.Name.Replace("T23_", "");
-                moduleList.Add(key, module);
+                string displayName = module.Name.Replace("T23_", "");
+                string key;
+                if (categoryMap != null)
+                {
+                    string category;
+                    if (!categoryMap.TryGetValue(module.Name, out category))
+                        category = "Other";
+                    key = category + "/" + displayName;
+                }
+                else
+                {
+                    key = displayName;
+                }
+                if (!moduleList.ContainsKey(key))
+                    moduleList.Add(key, module);
             }
             return moduleList;
         }
