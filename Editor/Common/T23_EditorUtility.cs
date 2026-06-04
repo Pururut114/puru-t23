@@ -26,47 +26,39 @@ namespace Trigger2to3
 
         public static void ShowTitle(string title)
         {
-            Color backColor = Color.white;
-            Color textColor = Color.white;
+            Color backColor;
             switch (title)
             {
-                case "Master":
-                    backColor = Color.red;
-                    textColor = new Color(0.7f, 0.7f, 0.7f);
-                    break;
-                case "Broadcast":
-                    backColor = Color.green;
-                    textColor = new Color(0.5f, 0.5f, 0.5f);
-                    break;
-                case "Trigger":
-                    backColor = Color.yellow;
-                    textColor = new Color(0.5f, 0.5f, 0.5f);
-                    break;
-                case "Action":
-                    backColor = Color.cyan;
-                    textColor = new Color(0.5f, 0.5f, 0.5f);
-                    break;
-                case "Option":
-                    backColor = Color.white;
-                    textColor = new Color(0.5f, 0.5f, 0.5f);
-                    break;
+                case "Master":    backColor = new Color(0.95f, 0.40f, 0.40f); break;
+                case "Broadcast": backColor = new Color(0.35f, 0.85f, 0.45f); break;
+                case "Trigger":   backColor = new Color(0.95f, 0.85f, 0.25f); break;
+                case "Action":    backColor = new Color(0.25f, 0.75f, 0.95f); break;
+                default:          backColor = new Color(0.88f, 0.88f, 0.88f); break;
             }
 
-            Color oldBackgroundColor = GUI.backgroundColor;
+            GUIStyle style = new GUIStyle(GUI.skin.box)
+            {
+                fontStyle = FontStyle.Bold,
+                fontSize = 11,
+                alignment = TextAnchor.MiddleCenter,
+            };
+            style.normal.textColor = Color.black;
+
+            Color oldBack = GUI.backgroundColor;
             GUI.backgroundColor = backColor;
-            GUIStyle titleStyle = new GUIStyle(EditorStyles.textField);
-            titleStyle.normal.textColor = textColor;
-            titleStyle.fontStyle = FontStyle.BoldAndItalic;
-            EditorGUILayout.TextField(">>> Trigger2to3 " + title, titleStyle);
-            GUI.backgroundColor = oldBackgroundColor;
+            GUILayout.Box("T23 / " + title, style, GUILayout.Height(22), GUILayout.ExpandWidth(true));
+            GUI.backgroundColor = oldBack;
         }
 
         public static GUIStyle HeadlineStyle(bool isMaster = false)
         {
             GUIStyle style = new GUIStyle();
             style.fontSize = isMaster ? 20 : 14;
+            style.fontStyle = FontStyle.Bold;
             style.alignment = TextAnchor.MiddleCenter;
-            style.normal.textColor = new Color(0.5f, 0.5f, 0);
+            style.normal.textColor = EditorGUIUtility.isProSkin
+                ? new Color(0.85f, 0.85f, 0.85f)
+                : new Color(0.15f, 0.15f, 0.15f);
             return style;
         }
 
