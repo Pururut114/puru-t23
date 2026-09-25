@@ -218,6 +218,8 @@ Runtime/ProgramAsset/Integration/<Pkg>/
 > Имя сборки пакета (`<PkgAssemblyName>`) — брать из поля `"name"` в `.asmdef` файле самого пакета  
 > (`Packages/<pkg-id>/Runtime/*.asmdef`), **не** по имени файла и не по имени UdonSharpAssemblyDefinition asset.  
 > Пример: LTCGI → `LTCGI_Assembly.asmdef` → `"name": "LTCGI_Assembly"`.
+>
+> `<PKG_DEFINE>` вручную заводить не нужно, если пакет объявляет его сам через `versionDefines` в своём `package.json` (стандарт VPM, ставится при установке через VCC). LTCGI так и делает: `LTCGI_INCLUDED`. Проверять в `package.json` пакета; если символа там нет — заводить свой (как `PSS_LTCGI_INSTALLED` у PSS) в Scripting Define Symbols.
 
 ### 2. Editor asmdef
 
